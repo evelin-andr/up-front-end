@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 
-export default function Dashboard({ onLogout, onNavigate }) {
+export default function Dashboard({ userName = "Maria Souza", profilePic, onNavigate, onLogout }) {
   const dependent = { name: "Lucas Souza", age: 9, grade: "4º Ano" };
   const upcomingAppointment = {
     date: "12 de Junho, 2026",
@@ -13,8 +13,8 @@ export default function Dashboard({ onLogout, onNavigate }) {
   return (
     <div className="min-h-screen bg-ivory flex flex-col">
       
-      {/* Usamos o componente reutilizável Navbar */}
-      <Navbar userName="Maria Souza" onNavigate={onNavigate} onLogout={onLogout} />
+      {/* Componente reutilizável Navbar */}
+      <Navbar userName={userName} profilePic={profilePic} onNavigate={onNavigate} onLogout={onLogout} />
 
       {/* Conteúdo Principal do Dashboard */}
       <main className="flex-1 p-6 md:p-10">
@@ -22,8 +22,8 @@ export default function Dashboard({ onLogout, onNavigate }) {
           
           {/* Boas-vindas */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h1 className="text-2xl font-bold text-gray-800">Olá, Maria Souza 👋</h1>
-            <p className="text-sm text-gray-500 mt-1">Bem-vinda ao seu painel de acompanhamento psicopedagógico.</p>
+            <h1 className="text-2xl font-bold text-[#305030]">É bom te ver de novo!, {userName} 👋</h1>
+            <p className="text-sm text-gray-500 mt-1">Bem-vindo(a) ao seu painel de acompanhamento psicopedagógico.</p>
           </div>
 
           {/* Ação Rápida / Botão de Agendamento */}
@@ -32,9 +32,12 @@ export default function Dashboard({ onLogout, onNavigate }) {
               <h2 className="text-lg font-semibold">Precisa de marcar uma nova consulta?</h2>
               <p className="text-xs text-emerald-100 mt-1">Escolha os melhores horários disponíveis na nossa agenda.</p>
             </div>
-            <button className="px-6 py-3 bg-white text-[#1b5e3a] font-semibold text-sm rounded-xl hover:bg-emerald-50 transition shadow-sm whitespace-nowrap">
-              + Agendar Consulta
-            </button>
+            <button 
+  onClick={() => onNavigate && onNavigate('novo-agendamento')}
+  className="px-6 py-3 bg-white text-[#1b5e3a] font-semibold text-sm rounded-xl hover:bg-emerald-50 transition shadow-sm whitespace-nowrap"
+>
+  + Agendar Consulta
+</button>
           </div>
 
           {/* Grelha de Informações */}
@@ -48,6 +51,8 @@ export default function Dashboard({ onLogout, onNavigate }) {
                   <p className="text-base font-bold text-gray-800">{upcomingAppointment.type}</p>
                   <p className="text-sm text-gray-600">📅 {upcomingAppointment.date} às {upcomingAppointment.time}</p>
                   <p className="text-sm text-gray-600">👩‍⚕️ {upcomingAppointment.professional}</p>
+                  <p className="text-sm text-gray-600">👤 {dependent.name}</p>
+
                 </div>
               </div>
               <div className="mt-6 pt-4 border-t border-gray-50 flex justify-end">
@@ -61,13 +66,16 @@ export default function Dashboard({ onLogout, onNavigate }) {
                 <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4">Dependente Vinculado</h3>
                 <div className="space-y-2">
                   <p className="text-base font-bold text-gray-800">{dependent.name}</p>
-                  <p className="text-sm text-gray-600">👶 Idade: {dependent.age} anos</p>
+                  <p className="text-sm text-gray-600">🎂 Idade: {dependent.age} anos</p>
                   <p className="text-sm text-gray-600">📚 Escolaridade: {dependent.grade}</p>
                 </div>
               </div>
               <div className="mt-6 pt-4 border-t border-gray-50 flex justify-end">
-                <button className="text-xs text-[#1b5e3a] font-semibold hover:underline">
-                  Vizualizar dependentes e relatórios &rarr;
+                <button 
+                  onClick={() => onNavigate && onNavigate('dependentes')}
+                  className="text-xs text-[#1b5e3a] font-semibold hover:underline"
+                >
+                  Vizualizar dependentes  &rarr;
                 </button>
               </div>
             </div>

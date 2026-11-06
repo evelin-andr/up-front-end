@@ -1,4 +1,5 @@
 import React, { useState} from 'react'
+import folhaIcon from './folha.png'; 
 
 export default function Login({ onSwitchToRegister }){
     //onde vai ser guardado o email e senha nos inputs
@@ -19,9 +20,13 @@ export default function Login({ onSwitchToRegister }){
             <div className="flex flex-col items-center mb-8">
               <div className="w-16 h-16 bg-[#1b5e3a] rounded-2xl flex items-center justify-center text-white mb-4 shadow-md">
                 {/* Ícone de folha/planta simulado */}
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                </svg>
+                <img 
+                   src={folhaIcon} 
+                   alt="Ícone Folha" 
+                   className="w-7 h-7 object-contain"
+                   />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            
               </div>
               <h1 className="text-xl font-bold text-gray-800 tracking-wide">UP</h1>
               <p className="text-sm text-gray-500 mt-1">Acesse sua conta para continuar</p>
