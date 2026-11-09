@@ -26,18 +26,19 @@ export default function Dashboard({ userName = "Maria Souza", profilePic, onNavi
             <p className="text-sm text-gray-500 mt-1">Bem-vindo(a) ao seu painel de acompanhamento psicopedagógico.</p>
           </div>
 
-          {/* Ação Rápida / Botão de Agendamento */}
-          <div className="bg-[#1b5e3a] text-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-              <h2 className="text-lg font-semibold">Precisa de marcar uma nova consulta?</h2>
-              <p className="text-xs text-emerald-100 mt-1">Escolha os melhores horários disponíveis na nossa agenda.</p>
-            </div>
-            <button 
-  onClick={() => onNavigate && onNavigate('novo-agendamento')}
-  className="px-6 py-3 bg-white text-[#1b5e3a] font-semibold text-sm rounded-xl hover:bg-emerald-50 transition shadow-sm whitespace-nowrap"
->
-  + Agendar Consulta
-</button>
+         {/* Ação Rápida / Botão de Agendamento */}
+        <div className="bg-[#1b5e3a] text-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-center gap-4">
+          <div>
+            <h2 className="text-lg font-semibold">Precisa de marcar uma nova consulta?</h2>
+            <p className="text-xs text-emerald-100 mt-1">Escolha os melhores horários disponíveis na nossa agenda.</p>
+          </div>
+          <button 
+            onClick={() => onNavigate && onNavigate('selecionar-consulta')}
+            className="px-6 py-3 bg-white text-[#1b5e3a] font-semibold text-sm rounded-xl hover:bg-emerald-50 transition shadow-sm whitespace-nowrap"
+          >
+            + Agendar Consulta
+          </button>
+
           </div>
 
           {/* Grelha de Informações */}

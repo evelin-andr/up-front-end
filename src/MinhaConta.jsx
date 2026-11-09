@@ -43,7 +43,7 @@ export default function MinhaConta({ userName, setUserName, profilePic, setProfi
           <button 
             type="button"
             onClick={() => onNavigate('dashboard')}
-            className="flex items-center text-xs font-bold text-[#1b5e3a] hover:opacity-80 transition gap-1.5 focus:outline-none"
+            className="flex items-center text-xs font-bold text-[#1b5e3a] hover:opacity-80 transition gap-1.5 focus:outline-none cursor-pointer"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -104,8 +104,9 @@ export default function MinhaConta({ userName, setUserName, profilePic, setProfi
             <h2 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Dados do Cadastro</h2>
             {!isEditing && (
               <button 
+                type="button"
                 onClick={() => setIsEditing(true)}
-                className="text-xs font-bold text-[#1b5e3a] hover:underline"
+                className="text-xs font-bold text-[#1b5e3a] hover:underline cursor-pointer"
               >
                 Editar
               </button>
@@ -183,13 +184,13 @@ export default function MinhaConta({ userName, setUserName, profilePic, setProfi
                 <button 
                   type="button" 
                   onClick={() => setIsEditing(false)}
-                  className="px-4 py-2 bg-gray-100 text-gray-600 rounded-xl font-semibold hover:bg-gray-200 transition"
+                  className="px-4 py-2 bg-gray-100 text-gray-600 rounded-xl font-semibold hover:bg-gray-200 transition cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button 
                   type="submit"
-                  className="px-4 py-2 bg-[#1b5e3a] text-white rounded-xl font-semibold hover:opacity-90 transition"
+                  className="px-4 py-2 bg-[#1b5e3a] text-white rounded-xl font-semibold hover:opacity-90 transition cursor-pointer"
                 >
                   Salvar
                 </button>
@@ -198,33 +199,34 @@ export default function MinhaConta({ userName, setUserName, profilePic, setProfi
           </form>
         </div>
 
-        {/* Bloco: Segurança */}
-        <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+       {/* Bloco: Segurança (Botão para Alterar/Recuperar Senha) */}
+       <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
           <h2 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Segurança</h2>
           <div 
-            onClick={() => alert("A redirecionar para alteração de senha...")}
+            onClick={() => onNavigate('alterar-senha')}
             className="flex items-center justify-between p-3 bg-emerald-50/50 rounded-xl cursor-pointer hover:bg-emerald-50 transition border border-emerald-100/60"
           >
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center text-[#1b5e3a]">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
               <div>
                 <h3 className="text-xs font-bold text-gray-800">Alterar senha</h3>
-                <p className="text-[11px] text-gray-500">Última alteração há 2 meses</p>
+                <p className="text-[11px] text-gray-500">Atualize sua senha de acesso</p>
               </div>
             </div>
             <span className="text-gray-400 font-bold">&rsaquo;</span>
           </div>
-        </div>
+       </div>
 
         {/* Botão de Encerrar Sessão */}
         <div className="pt-1">
           <button 
+            type="button"
             onClick={onLogout}
-            className="w-full py-3 bg-red-50 text-red-600 rounded-2xl text-xs font-bold hover:bg-red-100 transition shadow-sm border border-red-100"
+            className="w-full py-3 bg-red-50 text-red-600 rounded-2xl text-xs font-bold hover:bg-red-100 transition shadow-sm border border-red-100 cursor-pointer"
           >
             Encerrar Sessão
           </button>

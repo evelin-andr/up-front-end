@@ -1,15 +1,19 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react';
 import folhaIcon from './folha.png'; 
 
-export default function Login({ onSwitchToRegister }){
+export default function Login({ onSwitchToRegister, onNavigate }){
     //onde vai ser guardado o email e senha nos inputs
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     //função acionada ao clicar no botão de entrar
     const handleSubmit = (e) => {
-     e.preventDefault();
-     console.log("Email:", username, "Senha:", password);
+       e.preventDefault();
+       console.log("Email:", username, "Senha:", password);
+       // Redireciona para o dashboard ao fazer login com sucesso
+       if (onNavigate) {
+         onNavigate('dashboard');
+       }
     };
 
     return (
@@ -24,9 +28,7 @@ export default function Login({ onSwitchToRegister }){
                    src={folhaIcon} 
                    alt="Ícone Folha" 
                    className="w-7 h-7 object-contain"
-                   />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-            
+                />
               </div>
               <h1 className="text-xl font-bold text-gray-800 tracking-wide">UP</h1>
               <p className="text-sm text-gray-500 mt-1">Acesse sua conta para continuar</p>
@@ -35,7 +37,7 @@ export default function Login({ onSwitchToRegister }){
             {/* Formulário de Login */}
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-xs font-semibold text-gray-600 uppercase mb-1">Usuário</label>
+                <label className="block text-xs font-semibold text-gray-600 uppercase mb-1">Usuário:</label>
                 <input 
                   type="text" 
                   value={username}
@@ -47,7 +49,7 @@ export default function Login({ onSwitchToRegister }){
               </div>
     
               <div>
-                <label className="block text-xs font-semibold text-gray-600 uppercase mb-1">Senha</label>
+                <label className="block text-xs font-semibold text-gray-600 uppercase mb-1">Senha:</label>
                 <input 
                   type="password" 
                   value={password}
@@ -57,7 +59,17 @@ export default function Login({ onSwitchToRegister }){
                   required
                 />
                 <div className="flex justify-end mt-1">
-                  <a href="#" className="text-xs text-[#1b5e3a] hover:underline font-medium">Esqueci minha senha</a>
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      if (onNavigate) {
+                        onNavigate('esqueci-senha');
+                      }
+                    }} 
+                    className="text-xs text-[#1b5e3a] hover:underline font-medium bg-transparent border-none cursor-pointer p-0"
+                  >
+                    Esqueci minha senha
+                  </button>
                 </div>
               </div>
     
@@ -69,11 +81,19 @@ export default function Login({ onSwitchToRegister }){
               </button>
             </form>
 
-        {/* Link para ir para o Registo */}
-        <div className="text-center mt-6">
+      {/* Link para ir para o Registo */}
+      <div className="text-center mt-6">
           <p className="text-xs text-gray-500">
             Ainda não tem conta?{' '}
-            <button onClick={onSwitchToRegister} className="text-[#1b5e3a] font-semibold hover:underline">
+            <button 
+              type="button"
+              onClick={() => {
+                if (onSwitchToRegister) {
+                  onSwitchToRegister();
+                }
+              }} 
+              className="text-[#1b5e3a] font-semibold hover:underline bg-transparent border-none cursor-pointer p-0"
+            >
               Criar sua conta
             </button>
           </p>

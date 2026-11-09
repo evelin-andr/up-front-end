@@ -1,32 +1,23 @@
 import React, { useState } from 'react';
 
-export default function Agendamentos({ onNavigate }) {
-  const [agendamentos, setAgendamentos] = useState([
-    {
-      id: 1,
-      type: "Avaliação Psicopedagógica",
-      date: "12 de junho de 2026 às 14h30",
-      professional: "Dra. Ana Beatriz",
-      dependent: "Lucas Souza",
-      status: "Confirmado"
-    },
-    {
-      id: 2,
-      type: "Sessão de Acompanhamento",
-      date: "28 de maio de 2026 às 10:00",
-      professional: "Dra. Ana Beatriz",
-      dependent: "Lucas Souza",
-      status: "Realizado"
-    }
-  ]);
-
+export default function Agendamentos({ agendamentos, setAgendamentos, onNavigate }) {
   const [filtroStatus, setFiltroStatus] = useState('');
   const [filtroProfissional, setFiltroProfissional] = useState('');
   const [filtroDependente, setFiltroDependente] = useState('');
 
-  const handleCancelar = (id) => {
-    if (window.confirm("Tens a certeza de que desejas cancelar este agendamento?")) {
-      setAgendamentos(agendamentos.filter(item => item.id !== id));
+  // Estado para controlar o modal de confirmação de cancelamento
+  const [agendamentoParaCancelar, setAgendamentoParaCancelar] = useState(null);
+
+  // Abrir o modal de confirmação
+  const handleAbrirModalCancelar = (item) => {
+    setAgendamentoParaCancelar(item);
+  };
+
+  // Confirmar a remoção do agendamento
+  const handleConfirmarCancelamento = () => {
+    if (agendamentoParaCancelar) {
+      setAgendamentos(agendamentos.filter(item => item.id !== agendamentoParaCancelar.id));
+      setAgendamentoParaCancelar(null);
     }
   };
 
@@ -38,7 +29,7 @@ export default function Agendamentos({ onNavigate }) {
   });
 
   return (
-    <div className="min-h-screen bg-ivory flex flex-col">
+    <div className="min-h-screen bg-ivory flex flex-col relative">
       
       {/* Cabeçalho */}
       <header className="bg-white border-b border-gray-100 px-4 py-3.5 shadow-sm">
@@ -69,7 +60,7 @@ export default function Agendamentos({ onNavigate }) {
             <p className="text-xs text-gray-500 mt-0.5">Consulte ou marque novas consultas.</p>
           </div>
           <button 
-            onClick={() => onNavigate('elecionar-consulta')}
+            onClick={() => onNavigate('selecionar-consulta')}
             className="px-4 py-2.5 bg-[#1b5e3a] text-white text-xs font-semibold rounded-xl hover:opacity-90 transition shadow-sm whitespace-nowrap flex items-center gap-1.5"
           >
             + Nova Consulta
@@ -134,7 +125,7 @@ export default function Agendamentos({ onNavigate }) {
                 <div className="flex items-start justify-between">
                   <div>
                     <h2 className="text-base font-bold text-gray-800">{item.type}</h2>
-                    <p className="text-xs text-gray-600 mt-1">👩‍⚕️ {item.professional} &bull; 👶 {item.dependent}</p>
+                    <p className="text-xs text-gray-600 mt-1">👩‍⚕️ {item.professional} &bull; 👤 {item.dependent}</p>
                   </div>
                   <span className={`text-[10px] px-2.5 py-1 rounded-full font-semibold ${
                     item.status === 'Confirmado' 
@@ -149,7 +140,7 @@ export default function Agendamentos({ onNavigate }) {
                   <span>📅 {item.date}</span>
                   {item.status === 'Confirmado' && (
                     <button 
-                      onClick={() => handleCancelar(item.id)}
+                      onClick={() => handleAbrirModalCancelar(item)}
                       className="font-bold text-red-600 hover:underline"
                     >
                       Cancelar
@@ -162,6 +153,55 @@ export default function Agendamentos({ onNavigate }) {
         </div>
 
       </main>
+
+      {/* MODAL PERSONALIZADO DE CANCELAMENTO */}
+      {agendamentoParaCancelar && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full space-y-5 shadow-2xl text-center border border-gray-100">
+            
+            {/* Ícone de Alerta */}
+            <div className="w-14 h-14 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto shadow-inner">
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+
+            {/* Título e Texto */}
+            <div className="space-y-1">
+              <h3 className="text-base font-bold text-gray-900">Cancelar Agendamento?</h3>
+              <p className="text-xs text-gray-500">
+                Tens a certeza de que desejas cancelar esta consulta? Esta ação libertará o horário na agenda.
+              </p>
+            </div>
+
+            {/* Detalhes da Consulta a Cancelar */}
+            <div className="bg-gray-50 p-3 rounded-2xl text-left space-y-1 text-xs border border-gray-100">
+              <p className="font-bold text-gray-800">{agendamentoParaCancelar.type}</p>
+              <p className="text-gray-500">📅 {agendamentoParaCancelar.date}</p>
+            </div>
+
+            {/* Botões de Ação */}
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <button
+                type="button"
+                onClick={() => setAgendamentoParaCancelar(null)}
+                className="w-full py-3 bg-gray-100 text-gray-700 font-bold text-xs rounded-xl hover:bg-gray-200 transition"
+              >
+                Voltar
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmarCancelamento}
+                className="w-full py-3 bg-red-600 text-white font-bold text-xs rounded-xl hover:bg-red-700 transition shadow-sm"
+              >
+                Sim, cancelar
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

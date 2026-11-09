@@ -3,30 +3,39 @@ import React, { useState } from 'react';
 export default function SelecionarConsulta({ onNavigate, setDadosAgendamento }) {
   const [especialidade, setEspecialidade] = useState('Psicopedagogia Clínica');
   const [profissional, setProfissional] = useState('Dra. Ana Beatriz');
+  const [crm, setCrm] = useState('CRM/CRQ 1234');
   const [paciente, setPaciente] = useState('Lucas Souza (Filho)');
   const [tipoAtendimento, setTipoAtendimento] = useState('Avaliação Psicopedagógica');
+
+  // Atualiza o CRM automaticamente com base no profissional escolhido
+  const handleProfissionalChange = (e) => {
+    const nome = e.target.value;
+    setProfissional(nome);
+    if (nome.includes('Ana Beatriz')) {
+      setCrm('CRM/CRQ 1234');
+    } else {
+      setCrm('CRQ 5678');
+    }
+  };
 
   const handleAvancar = (e) => {
     e.preventDefault();
     
-    // Guarda os dados selecionados (caso queiras usar na próxima tela)
     if (setDadosAgendamento) {
       setDadosAgendamento({
         especialidade,
         profissional,
+        crm,
         paciente,
         tipoAtendimento
       });
     }
 
-    // Avança para a tela de horários do Google Agenda
     onNavigate('novo-agendamento');
   };
 
   return (
     <div className="min-h-screen bg-ivory flex flex-col">
-      
-      {/* Cabeçalho */}
       <header className="bg-white border-b border-gray-100 px-4 py-3.5 shadow-sm">
         <div className="max-w-md mx-auto flex items-center justify-between">
           <button 
@@ -39,28 +48,20 @@ export default function SelecionarConsulta({ onNavigate, setDadosAgendamento }) 
             </svg>
             Voltar
           </button>
-          
           <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Nova Consulta</span>
-          
           <div className="w-10"></div>
         </div>
       </header>
 
-      {/* Conteúdo Principal */}
       <main className="flex-1 px-4 py-8 max-w-md mx-auto w-full space-y-6">
-        
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Agendar Consulta</h1>
           <p className="text-xs text-gray-500 mt-0.5">Selecione os detalhes do atendimento.</p>
         </div>
 
         <form onSubmit={handleAvancar} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4 text-xs">
-          
-          {/* Especialidade */}
           <div>
-            <label className="block font-semibold text-gray-700 mb-1">
-              Especialidade <span className="text-red-500">*</span>
-            </label>
+            <label className="block font-semibold text-gray-700 mb-1">Especialidade <span className="text-red-500">*</span></label>
             <select 
               value={especialidade}
               onChange={(e) => setEspecialidade(e.target.value)}
@@ -72,14 +73,11 @@ export default function SelecionarConsulta({ onNavigate, setDadosAgendamento }) 
             </select>
           </div>
 
-          {/* Profissional */}
           <div>
-            <label className="block font-semibold text-gray-700 mb-1">
-              Profissional <span className="text-red-500">*</span>
-            </label>
+            <label className="block font-semibold text-gray-700 mb-1">Profissional <span className="text-red-500">*</span></label>
             <select 
               value={profissional}
-              onChange={(e) => setProfissional(e.target.value)}
+              onChange={handleProfissionalChange}
               className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a] font-medium text-gray-800"
             >
               <option value="Dra. Ana Beatriz">Dra. Ana Beatriz (CRM/CRQ 1234)</option>
@@ -87,11 +85,8 @@ export default function SelecionarConsulta({ onNavigate, setDadosAgendamento }) 
             </select>
           </div>
 
-          {/* Para quem é a consulta (Dependente / Próprio) */}
           <div>
-            <label className="block font-semibold text-gray-700 mb-1">
-              Para quem é a consulta? <span className="text-red-500">*</span>
-            </label>
+            <label className="block font-semibold text-gray-700 mb-1">Para quem é a consulta? <span className="text-red-500">*</span></label>
             <select 
               value={paciente}
               onChange={(e) => setPaciente(e.target.value)}
@@ -102,11 +97,8 @@ export default function SelecionarConsulta({ onNavigate, setDadosAgendamento }) 
             </select>
           </div>
 
-          {/* Tipo de Atendimento */}
           <div>
-            <label className="block font-semibold text-gray-700 mb-1">
-              Tipo de Atendimento <span className="text-red-500">*</span>
-            </label>
+            <label className="block font-semibold text-gray-700 mb-1">Tipo de Atendimento <span className="text-red-500">*</span></label>
             <select 
               value={tipoAtendimento}
               onChange={(e) => setTipoAtendimento(e.target.value)}
@@ -126,9 +118,7 @@ export default function SelecionarConsulta({ onNavigate, setDadosAgendamento }) 
               Avançar para horários &rsaquo;
             </button>
           </div>
-
         </form>
-
       </main>
     </div>
   );
