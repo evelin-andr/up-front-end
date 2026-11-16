@@ -39,7 +39,7 @@ export default function Dashboard({ userName = "Maria Souza", profilePic, onNavi
             + Agendar Consulta
           </button>
 
-          </div>
+          </div> 
 
           {/* Grelha de Informações */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
