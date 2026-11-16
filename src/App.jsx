@@ -9,6 +9,7 @@ import NovoAgendamento from './NovoAgendamento';
 import AlterarSenha from './AlterarSenha';
 import EsqueciSenha from './EsqueciSenha';
 import DashboardProfissional from './DashboardProfissional';
+import MarcarConsultaProfissional from './MarcarConsultaProfissional';
 import Pacientes from './Pacientes';
 import DetalhePaciente from './DetalhePaciente';
 import CadastrarPaciente from './CadastrarPaciente';
@@ -130,14 +131,24 @@ export default function App() {
             onLogout={() => setCurrentScreen('login')} 
           />
         );
+
+      case 'marcar-consulta-profissional':
+        return (
+          <MarcarConsultaProfissional 
+            userName={userName}
+            pacientes={pacientes}
+            onNavigate={setCurrentScreen}
+            onAdicionarAgendamento={handleAdicionarAgendamento}
+          />
+        );
       
       case 'minha-conta':
         return (
           <MinhaConta 
             userName={userName} 
-            setUserName={setUserName}
+            setUserName={setUserName} 
             profilePic={profilePic} 
-            setProfilePic={setProfilePic}
+            setProfilePic={setProfilePic} 
             onNavigate={setCurrentScreen} 
             onLogout={() => setCurrentScreen('login')} 
           />
@@ -200,20 +211,20 @@ export default function App() {
           />
         );
 
-        case 'detalhe-paciente':
-          return (
-            <DetalhePaciente 
-              patient={selectedPatient}
-              onNavigate={setCurrentScreen}
-              onUpdatePatient={(pacienteAtualizado) => {
-                setPacientes(pacientes.map(p => p.id === pacienteAtualizado.id ? pacienteAtualizado : p));
-                setSelectedPatient(pacienteAtualizado);
-              }}
-              onDeletePatient={(id) => {
-                setPacientes(pacientes.filter(p => p.id !== id));
-              }}
-            />
-          );
+      case 'detalhe-paciente':
+        return (
+          <DetalhePaciente 
+            patient={selectedPatient}
+            onNavigate={setCurrentScreen}
+            onUpdatePatient={(pacienteAtualizado) => {
+              setPacientes(pacientes.map(p => p.id === pacienteAtualizado.id ? pacienteAtualizado : p));
+              setSelectedPatient(pacienteAtualizado);
+            }}
+            onDeletePatient={(id) => {
+              setPacientes(pacientes.filter(p => p.id !== id));
+            }}
+          />
+        );
 
       default:
         return (
