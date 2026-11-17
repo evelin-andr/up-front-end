@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
 import MinhaConta from './MinhaConta';
-import Dashboard from './Dashboard'; // Certifique-se de importar o componente correto
+import Dashboard from './Dashboard';
 import Dependentes from './Dependentes';
 import Agendamentos from './Agendamentos';
 import SelecionarConsulta from './SelecionarConsulta';
@@ -14,6 +14,7 @@ import MarcarConsultaProfissional from './MarcarConsultaProfissional';
 import Pacientes from './Pacientes';
 import DetalhePaciente from './DetalhePaciente';
 import CadastrarPaciente from './CadastrarPaciente';
+import MinhaContaProfissional from './MinhaContaProfissional';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('dashboard-profissional');
@@ -152,9 +153,23 @@ export default function App() {
           />
         );
 
+      // Rota de Conta do Paciente
       case 'minha-conta':
         return (
           <MinhaConta
+            userName={userName}
+            setUserName={setUserName}
+            profilePic={profilePic}
+            setProfilePic={setProfilePic}
+            onNavigate={setCurrentScreen}
+            onLogout={() => setCurrentScreen('login')}
+          />
+        );
+
+      // Nova Rota de Conta do Profissional
+      case 'minha-conta-profissional':
+        return (
+          <MinhaContaProfissional
             userName={userName}
             setUserName={setUserName}
             profilePic={profilePic}

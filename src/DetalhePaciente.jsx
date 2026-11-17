@@ -67,30 +67,17 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
       {/* Container Principal */}
       <div className="w-full min-h-screen bg-[#FAF3EC] flex flex-col justify-between relative overflow-x-hidden pb-20 md:pb-8">
         
-        {/* Header Fixo */}
+        {/* Header Fixo (Foto de perfil removida) */}
         <header className="bg-white px-6 md:px-12 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10 shadow-sm">
           <div className="flex items-center gap-3">
             <button 
               type="button"
               onClick={() => onNavigate && onNavigate('pacientes')}
-              className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-full transition"
+              className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-full transition cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
             <h1 className="font-semibold text-gray-900 text-base md:text-lg">Ficha do Paciente</h1>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <div 
-              onClick={() => onNavigate && onNavigate('minha-conta')}
-              className="w-9 h-9 rounded-full overflow-hidden border-2 border-[#1b5e3a] cursor-pointer hover:opacity-90 transition"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" 
-                alt="Perfil" 
-                className="w-full h-full object-cover"
-              />
-            </div>
           </div>
         </header>
 
@@ -122,7 +109,7 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
                   setIsEditing(true);
                 }}
                 title="Editar Paciente"
-                className="p-2.5 bg-emerald-50 text-[#1b5e3a] hover:bg-emerald-100 rounded-xl transition flex items-center gap-1.5 text-xs font-semibold"
+                className="p-2.5 bg-emerald-50 text-[#1b5e3a] hover:bg-emerald-100 rounded-xl transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
               >
                 <Pencil className="w-4 h-4" />
                 <span className="hidden md:inline">Editar</span>
@@ -131,7 +118,7 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
                 type="button"
                 onClick={() => setIsDeleting(true)}
                 title="Excluir Paciente"
-                className="p-2.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition flex items-center gap-1.5 text-xs font-semibold"
+                className="p-2.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
               >
                 <Trash2 className="w-4 h-4" />
                 <span className="hidden md:inline">Excluir</span>
@@ -144,7 +131,7 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
             <button 
               type="button"
               onClick={() => setActiveTab('dados')}
-              className={`pb-3 px-4 text-xs md:text-sm font-semibold border-b-2 transition whitespace-nowrap ${
+              className={`pb-3 px-4 text-xs md:text-sm font-semibold border-b-2 transition whitespace-nowrap cursor-pointer ${
                 activeTab === 'dados' 
                   ? 'border-[#1b5e3a] text-[#1b5e3a]' 
                   : 'border-transparent text-gray-400 hover:text-gray-600'
@@ -155,7 +142,7 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
             <button 
               type="button"
               onClick={() => setActiveTab('historico')}
-              className={`pb-3 px-4 text-xs md:text-sm font-semibold border-b-2 transition whitespace-nowrap ${
+              className={`pb-3 px-4 text-xs md:text-sm font-semibold border-b-2 transition whitespace-nowrap cursor-pointer ${
                 activeTab === 'historico' 
                   ? 'border-[#1b5e3a] text-[#1b5e3a]' 
                   : 'border-transparent text-gray-400 hover:text-gray-600'
@@ -166,7 +153,7 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
             <button 
               type="button"
               onClick={() => setActiveTab('evolucoes')}
-              className={`pb-3 px-4 text-xs md:text-sm font-semibold border-b-2 transition whitespace-nowrap ${
+              className={`pb-3 px-4 text-xs md:text-sm font-semibold border-b-2 transition whitespace-nowrap cursor-pointer ${
                 activeTab === 'evolucoes' 
                   ? 'border-[#1b5e3a] text-[#1b5e3a]' 
                   : 'border-transparent text-gray-400 hover:text-gray-600'
@@ -243,7 +230,7 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
               <button 
                 type="button"
                 onClick={() => setShowModalEvolucao(true)}
-                className="w-full bg-[#1b5e3a] text-white py-3.5 rounded-2xl font-bold text-xs md:text-sm hover:bg-[#14472c] transition shadow-sm flex items-center justify-center gap-2"
+                className="w-full bg-[#1b5e3a] text-white py-3.5 rounded-2xl font-bold text-xs md:text-sm hover:bg-[#14472c] transition shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Plus className="w-4 h-4" /> Adicionar Nova Evolução
               </button>
@@ -278,7 +265,7 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
             <div className="bg-white w-full max-w-lg p-6 md:p-8 rounded-3xl shadow-xl space-y-4 border border-gray-100 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-gray-900 text-sm md:text-base">Editar Paciente</h3>
-                <button type="button" onClick={() => setIsEditing(false)} className="text-gray-400 hover:text-gray-600">
+                <button type="button" onClick={() => setIsEditing(false)} className="text-gray-400 hover:text-gray-600 cursor-pointer">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -365,13 +352,13 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
                   <button
                     type="button"
                     onClick={() => setIsEditing(false)}
-                    className="w-full py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition"
+                    className="w-full py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition cursor-pointer"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="w-full py-3 bg-[#1b5e3a] text-white font-bold rounded-xl hover:bg-[#14472c] transition shadow-sm"
+                    className="w-full py-3 bg-[#1b5e3a] text-white font-bold rounded-xl hover:bg-[#14472c] transition shadow-sm cursor-pointer"
                   >
                     Salvar Alterações
                   </button>
@@ -400,14 +387,14 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
                 <button
                   type="button"
                   onClick={() => setIsDeleting(false)}
-                  className="w-full py-3 bg-gray-100 text-gray-700 font-bold text-xs rounded-xl hover:bg-gray-200 transition"
+                  className="w-full py-3 bg-gray-100 text-gray-700 font-bold text-xs rounded-xl hover:bg-gray-200 transition cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button
                   type="button"
                   onClick={handleConfirmarExclusao}
-                  className="w-full py-3 bg-red-600 text-white font-bold text-xs rounded-xl hover:bg-red-700 transition shadow-sm"
+                  className="w-full py-3 bg-red-600 text-white font-bold text-xs rounded-xl hover:bg-red-700 transition shadow-sm cursor-pointer"
                 >
                   Sim, excluir
                 </button>
@@ -457,14 +444,14 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
                     setShowModalEvolucao(false);
                     setAnexoArquivo(null);
                   }}
-                  className="w-full py-3 bg-gray-100 text-gray-700 font-bold text-xs rounded-xl hover:bg-gray-200 transition"
+                  className="w-full py-3 bg-gray-100 text-gray-700 font-bold text-xs rounded-xl hover:bg-gray-200 transition cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button 
                   type="button"
                   onClick={handleSalvarEvolucao}
-                  className="w-full py-3 bg-[#1b5e3a] text-white font-bold text-xs rounded-xl hover:bg-[#14472c] transition shadow-sm"
+                  className="w-full py-3 bg-[#1b5e3a] text-white font-bold text-xs rounded-xl hover:bg-[#14472c] transition shadow-sm cursor-pointer"
                 >
                   Salvar Evolução
                 </button>
@@ -472,45 +459,6 @@ export default function DetalhePaciente({ patient, onNavigate, onUpdatePatient, 
             </div>
           </div>
         )}
-
-        {/* Bottom Navigation: Aparece apenas no celular (md:hidden) e some no desktop */}
-        <nav className="bg-white border-t border-gray-100 px-6 py-3 flex items-center justify-around fixed bottom-0 left-0 right-0 z-20 shadow-lg md:hidden">
-          <button 
-            type="button"
-            onClick={() => onNavigate && onNavigate('dashboard-profissional')}
-            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition text-[10px] font-medium"
-          >
-            <Users className="w-5 h-5" />
-            <span>Início</span>
-          </button>
-          
-          <button 
-            type="button"
-            onClick={() => window.open('https://calendar.google.com', '_blank')}
-            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition text-[10px] font-medium"
-          >
-            <Calendar className="w-5 h-5" />
-            <span>Agenda</span>
-          </button>
-          
-          <button 
-            type="button"
-            onClick={() => onNavigate && onNavigate('pacientes')}
-            className="flex flex-col items-center gap-1 text-[#1b5e3a] font-bold text-[10px]"
-          >
-            <Users className="w-5 h-5" />
-            <span>Pacientes</span>
-          </button>
-          
-          <button 
-            type="button"
-            onClick={() => onNavigate && onNavigate('minha-conta')}
-            className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 transition text-[10px] font-medium"
-          >
-            <User className="w-5 h-5" />
-            <span>Minha Conta</span>
-          </button>
-        </nav>
 
       </div>
     </div>

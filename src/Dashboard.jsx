@@ -1,5 +1,12 @@
-import React from 'react';
-import Navbar from './Navbar';
+import React, { useState } from 'react';
+import { 
+  LayoutDashboard, 
+  Calendar, 
+  Users, 
+  UserCheck,
+  Leaf,
+  User
+} from 'lucide-react';
 
 export default function Dashboard({ userName = "Maria Souza", profilePic, onNavigate, onLogout }) {
   const dependent = { name: "Lucas Souza", age: 9, grade: "4º Ano" };
@@ -11,13 +18,28 @@ export default function Dashboard({ userName = "Maria Souza", profilePic, onNavi
   };
 
   return (
-    <div className="min-h-screen bg-ivory flex flex-col">
+    <div className="min-h-screen bg-ivory flex flex-col justify-between w-full notranslate" translate="no">
       
-      {/* Componente reutilizável Navbar */}
-      <Navbar userName={userName} profilePic={profilePic} onNavigate={onNavigate} onLogout={onLogout} />
+      {/* CABEÇALHO DO PROFISSIONAL (Sem menus flutuantes) */}
+      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-2 text-[#1b5e3a]">
+          <Leaf className="w-6 h-6" />
+        </div>
+
+        <h1 className="text-base md:text-lg font-bold text-[#1b5e3a]">
+          Olá, Dra. {userName}
+        </h1>
+
+        <button 
+          onClick={() => onNavigate && onNavigate('minha-conta')}
+          className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-[#1b5e3a] hover:bg-emerald-100 transition cursor-pointer"
+        >
+          <User className="w-5 h-5" />
+        </button>
+      </header>
 
       {/* Conteúdo Principal do Dashboard */}
-      <main className="flex-1 p-6 md:p-10">
+      <main className="flex-1 p-6 md:p-10 pb-24 md:pb-10">
         <div className="max-w-4xl mx-auto space-y-8">
           
           {/* Boas-vindas */}
@@ -34,12 +56,11 @@ export default function Dashboard({ userName = "Maria Souza", profilePic, onNavi
           </div>
           <button 
             onClick={() => onNavigate && onNavigate('selecionar-consulta')}
-            className="px-6 py-3 bg-white text-[#1b5e3a] font-semibold text-sm rounded-xl hover:bg-emerald-50 transition shadow-sm whitespace-nowrap"
+            className="px-6 py-3 bg-white text-[#1b5e3a] font-semibold text-sm rounded-xl hover:bg-emerald-50 transition shadow-sm whitespace-nowrap cursor-pointer"
           >
             + Agendar Consulta
           </button>
-
-          </div> 
+        </div> 
 
           {/* Grelha de Informações */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -53,7 +74,6 @@ export default function Dashboard({ userName = "Maria Souza", profilePic, onNavi
                   <p className="text-sm text-gray-600">📅 {upcomingAppointment.date} às {upcomingAppointment.time}</p>
                   <p className="text-sm text-gray-600">👩‍⚕️ {upcomingAppointment.professional}</p>
                   <p className="text-sm text-gray-600">👤 {dependent.name}</p>
-
                 </div>
               </div>
               <div className="mt-6 pt-4 border-t border-gray-50 flex justify-end">
@@ -74,9 +94,9 @@ export default function Dashboard({ userName = "Maria Souza", profilePic, onNavi
               <div className="mt-6 pt-4 border-t border-gray-50 flex justify-end">
                 <button 
                   onClick={() => onNavigate && onNavigate('dependentes')}
-                  className="text-xs text-[#1b5e3a] font-semibold hover:underline"
+                  className="text-xs text-[#1b5e3a] font-semibold hover:underline cursor-pointer"
                 >
-                  Vizualizar dependentes  &rarr;
+                  Vizualizar dependentes &rarr;
                 </button>
               </div>
             </div>
@@ -85,6 +105,45 @@ export default function Dashboard({ userName = "Maria Souza", profilePic, onNavi
 
         </div>
       </main>
+
+      {/* NAVEGAÇÃO INFERIOR MOBILE */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 px-3 py-2 flex justify-around items-center z-20 shadow-lg">
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('dashboard')}
+          className="flex flex-col items-center text-[#1b5e3a] gap-1 cursor-pointer"
+        >
+          <LayoutDashboard className="w-5 h-5" />
+          <span className="text-[10px] font-bold">Início</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('agendamentos')}
+          className="flex flex-col items-center text-gray-400 hover:text-[#1b5e3a] gap-1 cursor-pointer"
+        >
+          <Calendar className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Agendamentos</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('dependentes')}
+          className="flex flex-col items-center text-gray-400 hover:text-[#1b5e3a] gap-1 cursor-pointer"
+        >
+          <Users className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Dependentes</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('minha-conta')}
+          className="flex flex-col items-center text-gray-400 hover:text-[#1b5e3a] gap-1 cursor-pointer"
+        >
+          <UserCheck className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Conta</span>
+        </button>
+      </nav>
 
     </div>
   );

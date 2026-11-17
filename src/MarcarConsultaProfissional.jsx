@@ -181,9 +181,6 @@ export default function MarcarConsultaProfissional({
       {/* ÁREA DE CONTEÚDO PRINCIPAL */}
       <div className="flex-1 md:ml-64 flex flex-col min-h-screen pb-12">
         
-        {/* ======================================================== */}
-        {/* CABEÇALHO PADRÃO DAS TELAS INTERNAS (Com Voltar e Título) */}
-        {/* ======================================================== */}
         <header className="bg-white border-b border-gray-100 px-4 py-3.5 sticky top-0 z-10 shadow-sm flex items-center justify-between">
           <button
             type="button"
@@ -198,7 +195,6 @@ export default function MarcarConsultaProfissional({
             Marcar Consulta
           </h1>
 
-          {/* Espaçador invisível para centralizar perfeitamente o título */}
           <div className="w-12"></div>
         </header>
 
@@ -391,6 +387,7 @@ export default function MarcarConsultaProfissional({
                 </div>
               </div>
 
+              {/* CARD DE RESUMO DINÂMICO CORRIGIDO */}
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-5 lg:sticky lg:top-24">
                 <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
                   <FileText className="w-4 h-4 text-[#1b5e3a]" />
@@ -405,6 +402,26 @@ export default function MarcarConsultaProfissional({
                     <span className="font-bold text-gray-800 text-sm">
                       {pacienteSelecionado ? pacienteSelecionado.nome : 'Nenhum selecionado'}
                     </span>
+                  </div>
+
+                  <div>
+                    <span className="text-gray-400 block">Tipo de Atendimento</span>
+                    <span className="font-semibold text-gray-700">{tipoSessao}</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-gray-50">
+                    <div>
+                      <span className="text-gray-400 block">Data</span>
+                      <span className="font-bold text-gray-800">
+                        {dataConsulta ? dataConsulta.split('-').reverse().join('/') : '--/--/----'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-gray-400 block">Horário</span>
+                      <span className="font-bold text-[#1b5e3a]">
+                        {horarioSelecionado || '--:--'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 

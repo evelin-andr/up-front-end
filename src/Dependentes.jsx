@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { 
+  LayoutDashboard, 
+  Calendar, 
+  Users, 
+  UserCheck 
+} from 'lucide-react';
 
 export default function Dependentes({ onNavigate }) {
   const [dependentes, setDependentes] = useState([
@@ -67,155 +73,196 @@ export default function Dependentes({ onNavigate }) {
   };
 
   return (
-    <div className="min-h-screen bg-ivory flex flex-col relative">
+    <div className="min-h-screen bg-ivory flex flex-col relative justify-between">
       
-      {/* Cabeçalho */}
-      <header className="bg-white border-b border-gray-100 px-4 py-3.5 shadow-sm">
-        <div className="max-w-md mx-auto flex items-center justify-between">
-          <button 
-            type="button"
-            onClick={() => onNavigate('dashboard')}
-            className="flex items-center text-xs font-bold text-[#1b5e3a] hover:opacity-80 transition gap-1.5 focus:outline-none"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Voltar
-          </button>
-          
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Dependentes</span>
-          
-          <div className="w-10"></div>
-        </div>
-      </header>
-
-      {/* Conteúdo Principal */}
-      <main className="flex-1 px-4 py-8 max-w-md mx-auto w-full space-y-6">
-        
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Dependentes</h1>
-            <p className="text-xs text-gray-500 mt-0.5">Gerencie o perfil das crianças ou dependentes.</p>
-          </div>
-          {!exibindoFormulario && (
+      <div>
+        {/* Cabeçalho */}
+        <header className="bg-white border-b border-gray-100 px-4 py-3.5 shadow-sm">
+          <div className="max-w-md mx-auto flex items-center justify-between">
             <button 
-              onClick={() => setExibindoFormulario(true)}
-              className="px-4 py-2.5 bg-[#1b5e3a] text-white text-xs font-semibold rounded-xl hover:opacity-90 transition shadow-sm flex items-center gap-1.5 whitespace-nowrap"
+              type="button"
+              onClick={() => onNavigate('dashboard')}
+              className="flex items-center text-xs font-bold text-[#1b5e3a] hover:opacity-80 transition gap-1.5 focus:outline-none cursor-pointer"
             >
-              + Novo
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              Voltar
             </button>
+            
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Dependentes</span>
+            
+            <div className="w-10"></div>
+          </div>
+        </header>
+
+        {/* Conteúdo Principal (com padding inferior para a navbar mobile) */}
+        <main className="px-4 py-8 max-w-md mx-auto w-full space-y-6 pb-24">
+          
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Dependentes</h1>
+              <p className="text-xs text-gray-500 mt-0.5">Gerencie o perfil das crianças ou dependentes.</p>
+            </div>
+            {!exibindoFormulario && (
+              <button 
+                onClick={() => setExibindoFormulario(true)}
+                className="px-4 py-2.5 bg-[#1b5e3a] text-white text-xs font-semibold rounded-xl hover:opacity-90 transition shadow-sm flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+              >
+                + Novo
+              </button>
+            )}
+          </div>
+
+          {/* Formulário de Adicionar Dependente */}
+          {exibindoFormulario && (
+            <form onSubmit={handleSalvarDependente} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4 text-xs">
+              <h2 className="text-sm font-bold text-gray-800">Cadastrar Novo Dependente</h2>
+
+              <div>
+                <label className="block text-gray-600 mb-1 font-semibold">Nome Completo</label>
+                <input 
+                  type="text" 
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  placeholder="Ex: Lucas Souza"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a]"
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-gray-600 mb-1 font-semibold">Data de Nasc.</label>
+                  <input 
+                    type="text" 
+                    inputMode="numeric"
+                    value={dataNascimento}
+                    onChange={handleDataChange}
+                    placeholder="DD/MM/AAAA"
+                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a]"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-600 mb-1 font-semibold">CPF</label>
+                  <input 
+                    type="text" 
+                    inputMode="numeric"
+                    value={cpf}
+                    onChange={handleCpfChange}
+                    placeholder="000.000.000-00"
+                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a]"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-gray-600 mb-1 font-semibold">Parentesco</label>
+                <select 
+                  value={parentesco}
+                  onChange={(e) => setParentesco(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a]"
+                >
+                  <option value="Filho">Filho(a)</option>
+                  <option value="Enteado">Enteado(a)</option>
+                  <option value="Tutelado">Tutelado(a)</option>
+                  <option value="Outro">Outro</option>
+                </select>
+              </div>
+
+              <div className="flex gap-2 pt-2">
+                <button 
+                  type="button"
+                  onClick={() => setExibindoFormulario(false)}
+                  className="w-1/2 py-2.5 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  type="submit"
+                  className="w-1/2 py-2.5 bg-[#1b5e3a] text-white font-bold rounded-xl shadow-md hover:opacity-95 transition cursor-pointer"
+                >
+                  Salvar
+                </button>
+              </div>
+            </form>
           )}
-        </div>
 
-        {/* Formulário de Adicionar Dependente */}
-        {exibindoFormulario && (
-          <form onSubmit={handleSalvarDependente} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4 text-xs">
-            <h2 className="text-sm font-bold text-gray-800">Cadastrar Novo Dependente</h2>
-
-            <div>
-              <label className="block text-gray-600 mb-1 font-semibold">Nome Completo</label>
-              <input 
-                type="text" 
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                placeholder="Ex: Lucas Souza"
-                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a]"
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-gray-600 mb-1 font-semibold">Data de Nasc.</label>
-                <input 
-                  type="text" 
-                  inputMode="numeric"
-                  value={dataNascimento}
-                  onChange={handleDataChange}
-                  placeholder="DD/MM/AAAA"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a]"
-                  required
-                />
+          {/* Lista de Dependentes */}
+          <div className="space-y-4">
+            {dependentes.length === 0 ? (
+              <div className="bg-white rounded-2xl p-8 text-center text-gray-400 text-xs shadow-sm border border-gray-100">
+                Nenhum dependente cadastrado até ao momento.
               </div>
-
-              <div>
-                <label className="block text-gray-600 mb-1 font-semibold">CPF</label>
-                <input 
-                  type="text" 
-                  inputMode="numeric"
-                  value={cpf}
-                  onChange={handleCpfChange}
-                  placeholder="000.000.000-00"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a]"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-gray-600 mb-1 font-semibold">Parentesco</label>
-              <select 
-                value={parentesco}
-                onChange={(e) => setParentesco(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#1b5e3a]"
-              >
-                <option value="Filho">Filho(a)</option>
-                <option value="Enteado">Enteado(a)</option>
-                <option value="Tutelado">Tutelado(a)</option>
-                <option value="Outro">Outro</option>
-              </select>
-            </div>
-
-            <div className="flex gap-2 pt-2">
-              <button 
-                type="button"
-                onClick={() => setExibindoFormulario(false)}
-                className="w-1/2 py-2.5 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition"
-              >
-                Cancelar
-              </button>
-              <button 
-                type="submit"
-                className="w-1/2 py-2.5 bg-[#1b5e3a] text-white font-bold rounded-xl shadow-md hover:opacity-95 transition"
-              >
-                Salvar
-              </button>
-            </div>
-          </form>
-        )}
-
-        {/* Lista de Dependentes */}
-        <div className="space-y-4">
-          {dependentes.length === 0 ? (
-            <div className="bg-white rounded-2xl p-8 text-center text-gray-400 text-xs shadow-sm border border-gray-100">
-              Nenhum dependente cadastrado até ao momento.
-            </div>
-          ) : (
-            dependentes.map((item) => (
-              <div key={item.id} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h2 className="text-base font-bold text-gray-800">{item.nome}</h2>
-                    <p className="text-xs text-gray-500 mt-0.5">Parentesco: <span className="font-semibold text-gray-700">{item.parentesco}</span></p>
+            ) : (
+              dependentes.map((item) => (
+                <div key={item.id} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h2 className="text-base font-bold text-gray-800">{item.nome}</h2>
+                      <p className="text-xs text-gray-500 mt-0.5">Parentesco: <span className="font-semibold text-gray-700">{item.parentesco}</span></p>
+                    </div>
+                    <button 
+                      onClick={() => setDependenteParaExcluir(item)}
+                      className="text-xs font-bold text-red-600 hover:underline p-1 cursor-pointer"
+                    >
+                      Excluir
+                    </button>
                   </div>
-                  <button 
-                    onClick={() => setDependenteParaExcluir(item)}
-                    className="text-xs font-bold text-red-600 hover:underline p-1"
-                  >
-                    Excluir
-                  </button>
-                </div>
 
-                <div className="pt-2 border-t border-gray-50 text-xs text-gray-500 grid grid-cols-2 gap-2">
-                  <span>🎂 Nasc: <strong className="text-gray-700">{item.dataNascimento}</strong></span>
-                  <span>🪪 CPF: <strong className="text-gray-700">{item.cpf}</strong></span>
+                  <div className="pt-2 border-t border-gray-50 text-xs text-gray-500 grid grid-cols-2 gap-2">
+                    <span>🎂 Nasc: <strong className="text-gray-700">{item.dataNascimento}</strong></span>
+                    <span>🪪 CPF: <strong className="text-gray-700">{item.cpf}</strong></span>
+                  </div>
                 </div>
-              </div>
-            ))
-          )}
-        </div>
+              ))
+            )}
+          </div>
 
-      </main>
+        </main>
+      </div>
+
+      {/* NAVEGAÇÃO INFERIOR MOBILE (Ativa e destacando "Dependentes") */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 px-3 py-2 flex justify-around items-center z-20 shadow-lg">
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('dashboard')}
+          className="flex flex-col items-center text-gray-400 hover:text-[#1b5e3a] gap-1 cursor-pointer"
+        >
+          <LayoutDashboard className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Início</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('agendamentos')}
+          className="flex flex-col items-center text-gray-400 hover:text-[#1b5e3a] gap-1 cursor-pointer"
+        >
+          <Calendar className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Agendamentos</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('dependentes')}
+          className="flex flex-col items-center text-[#1b5e3a] gap-1 cursor-pointer"
+        >
+          <Users className="w-5 h-5" />
+          <span className="text-[10px] font-bold">Dependentes</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('minha-conta')}
+          className="flex flex-col items-center text-gray-400 hover:text-[#1b5e3a] gap-1 cursor-pointer"
+        >
+          <UserCheck className="w-5 h-5" />
+          <span className="text-[10px] font-semibold">Conta</span>
+        </button>
+      </nav>
 
       {/* MODAL PERSONALIZADO DE EXCLUSÃO DE DEPENDENTE */}
       {dependenteParaExcluir && (
@@ -249,14 +296,14 @@ export default function Dependentes({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => setDependenteParaExcluir(null)}
-                className="w-full py-3 bg-gray-100 text-gray-700 font-bold text-xs rounded-xl hover:bg-gray-200 transition"
+                className="w-full py-3 bg-gray-100 text-gray-700 font-bold text-xs rounded-xl hover:bg-gray-200 transition cursor-pointer"
               >
                 Voltar
               </button>
               <button
                 type="button"
                 onClick={handleConfirmarExclusao}
-                className="w-full py-3 bg-red-600 text-white font-bold text-xs rounded-xl hover:bg-red-700 transition shadow-sm"
+                className="w-full py-3 bg-red-600 text-white font-bold text-xs rounded-xl hover:bg-red-700 transition shadow-sm cursor-pointer"
               >
                 Sim, excluir
               </button>

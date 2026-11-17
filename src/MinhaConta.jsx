@@ -42,7 +42,7 @@ export default function MinhaConta({ userName, setUserName, profilePic, setProfi
         <div className="w-full max-w-6xl mx-auto flex items-center justify-between">
           <button 
             type="button"
-            onClick={() => onNavigate('dashboard-profissional')}
+            onClick={() => onNavigate('dashboard')}
             className="flex items-center text-xs md:text-sm font-bold text-[#1b5e3a] hover:opacity-80 transition gap-1.5 focus:outline-none cursor-pointer"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">

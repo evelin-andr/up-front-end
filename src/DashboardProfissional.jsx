@@ -201,7 +201,7 @@ export default function DashboardProfissional({ userName = 'Dra. Maria Souza', p
             <div className="pt-3 mt-3 border-t border-white/10 space-y-1">
               <button
                 type="button"
-                onClick={() => onNavigate && onNavigate('minha-conta')}
+                onClick={() => onNavigate && onNavigate('minha-conta-profissional')}
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-emerald-100 hover:bg-white/10 hover:text-white rounded-xl text-sm font-medium transition cursor-pointer"
               >
                 <UserCheck className="w-4 h-4" />
@@ -245,9 +245,9 @@ export default function DashboardProfissional({ userName = 'Dra. Maria Souza', p
                 <img src={folhaIcon} alt="UP" className="w-4 h-4 object-contain" />
               </div>
               <div>
-                <h1 className="text-sm md:text-xl font-bold text-gray-800">
-                  <span className="md:hidden">Olá, {userName}</span>
-                  <span className="hidden md:inline">Visão Geral da Clínica</span>
+                {/* Título Atualizado com a variável do profissional e cor verde escuro */}
+                <h1 className="text-sm md:text-xl font-bold text-[#1b5e3a]">
+                  Olá, {userName}
                 </h1>
                 <p className="text-[10px] md:text-xs text-gray-500">Resumo da sua clínica e atendimentos de hoje</p>
               </div>
@@ -275,7 +275,7 @@ export default function DashboardProfissional({ userName = 'Dra. Maria Souza', p
 
               <button
                 type="button"
-                onClick={() => onNavigate && onNavigate('minha-conta')}
+                onClick={() => onNavigate && onNavigate('minha-conta-profissional')}
                 className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-emerald-50 border border-[#1b5e3a]/30 text-[#1b5e3a] font-bold text-sm flex items-center justify-center hover:bg-emerald-100 transition cursor-pointer shrink-0 overflow-hidden"
                 title="Minha Conta"
               >
@@ -293,15 +293,15 @@ export default function DashboardProfissional({ userName = 'Dra. Maria Souza', p
         <main className="flex-1 px-4 md:px-10 py-6 max-w-6xl mx-auto w-full flex flex-col gap-6">
 
           {/* ======================================================== */}
-          {/* VISÃO EXCLUSIVA MOBILE (Sem o bloco duplicado de hoje)    */}
+          {/* VISÃO EXCLUSIVA MOBILE                                   */}
           {/* ======================================================== */}
           <div className="space-y-4 md:hidden">
             
-            {/* CARD DE MENSAGEM / BOAS-VINDAS (No lugar do bloco antigo) */}
+            {/* CARD DE MENSAGEM / BOAS-VINDAS */}
             <div className="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm space-y-2">
               <div className="flex items-center gap-2 text-[#1b5e3a]">
                 <Sparkles className="w-4 h-4" />
-                <h2 className="text-xs font-bold uppercase tracking-wider">Bem-vinda, Dra. Maria</h2>
+                <h2 className="text-xs font-bold uppercase tracking-wider">Bem-vinda, {userName}</h2>
               </div>
               <p className="text-xs text-gray-600 leading-relaxed">
                 Tenha um excelente dia de atendimentos! Confira abaixo a sua agenda e os atalhos rápidos da clínica.
@@ -391,11 +391,11 @@ export default function DashboardProfissional({ userName = 'Dra. Maria Souza', p
 
 
           {/* ======================================================== */}
-          {/* VISÃO WEB / DESKTOP (Com o Card de Mensagem no lugar do X) */}
+          {/* VISÃO WEB / DESKTOP                                      */}
           {/* ======================================================== */}
           <div className="hidden md:block space-y-6">
 
-            {/* SEÇÃO DE KPIs (Com o Card de Mensagem Integrado) */}
+            {/* SEÇÃO DE KPIs */}
             <section>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {kpis.map((item) => {
@@ -560,7 +560,7 @@ export default function DashboardProfissional({ userName = 'Dra. Maria Souza', p
         </button>
         <button
           type="button"
-          onClick={() => onNavigate && onNavigate('minha-conta')}
+          onClick={() => onNavigate && onNavigate('minha-conta-profissional')}
           className="flex flex-col items-center text-gray-400 hover:text-[#1b5e3a] gap-1 cursor-pointer"
         >
           <UserCheck className="w-5 h-5" />
