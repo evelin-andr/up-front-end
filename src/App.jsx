@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
 import MinhaConta from './MinhaConta';
-import Dependentes from './Dependentes'; 
-import Agendamentos from './Agendamentos'; 
+import Dashboard from './Dashboard'; // Certifique-se de importar o componente correto
+import Dependentes from './Dependentes';
+import Agendamentos from './Agendamentos';
 import SelecionarConsulta from './SelecionarConsulta';
 import NovoAgendamento from './NovoAgendamento';
 import AlterarSenha from './AlterarSenha';
@@ -19,7 +20,7 @@ export default function App() {
   const [userName, setUserName] = useState('Dra. Maria Souza');
   const [profilePic, setProfilePic] = useState(null);
   const [dadosAgendamento, setDadosAgendamento] = useState(null);
-  
+
   // Estado para controlar qual paciente está selecionado na ficha detalhada
   const [selectedPatient, setSelectedPatient] = useState(null);
 
@@ -113,89 +114,98 @@ export default function App() {
     switch (currentScreen) {
       case 'login':
         return (
-          <Login 
-            onSwitchToRegister={() => setCurrentScreen('register')} 
-            onNavigate={setCurrentScreen} 
+          <Login
+            onSwitchToRegister={() => setCurrentScreen('register')}
+            onNavigate={setCurrentScreen}
             onLoginSuccess={() => setCurrentScreen('dashboard-profissional')}
           />
         );
       case 'register':
         return <Register onSwitchToLogin={() => setCurrentScreen('login')} />;
-      
+
+      case 'dashboard':
+        return (
+          <Dashboard
+            userName={userName}
+            profilePic={profilePic}
+            onNavigate={setCurrentScreen}
+            onLogout={() => setCurrentScreen('login')}
+          />
+        );
       case 'dashboard-profissional':
         return (
-          <DashboardProfissional 
-            userName={userName} 
-            profilePic={profilePic} 
-            onNavigate={setCurrentScreen} 
-            onLogout={() => setCurrentScreen('login')} 
+          <DashboardProfissional
+            userName={userName}
+            profilePic={profilePic}
+            onNavigate={setCurrentScreen}
+            onLogout={() => setCurrentScreen('login')}
           />
         );
 
       case 'marcar-consulta-profissional':
         return (
-          <MarcarConsultaProfissional 
+          <MarcarConsultaProfissional
             userName={userName}
             pacientes={pacientes}
             onNavigate={setCurrentScreen}
             onAdicionarAgendamento={handleAdicionarAgendamento}
           />
         );
-      
+
       case 'minha-conta':
         return (
-          <MinhaConta 
-            userName={userName} 
-            setUserName={setUserName} 
-            profilePic={profilePic} 
-            setProfilePic={setProfilePic} 
-            onNavigate={setCurrentScreen} 
-            onLogout={() => setCurrentScreen('login')} 
+          <MinhaConta
+            userName={userName}
+            setUserName={setUserName}
+            profilePic={profilePic}
+            setProfilePic={setProfilePic}
+            onNavigate={setCurrentScreen}
+            onLogout={() => setCurrentScreen('login')}
           />
         );
-      
+
       case 'dependentes':
         return <Dependentes onNavigate={setCurrentScreen} />;
-      
+
       case 'agendamentos':
         return (
-          <Agendamentos 
+          <Agendamentos
             agendamentos={agendamentos}
             setAgendamentos={setAgendamentos}
-            onNavigate={setCurrentScreen} 
+            onNavigate={setCurrentScreen}
           />
         );
-      
+
       case 'selecionar-consulta':
         return (
-          <SelecionarConsulta 
-            onNavigate={setCurrentScreen} 
+          <SelecionarConsulta
+            onNavigate={setCurrentScreen}
             setDadosAgendamento={setDadosAgendamento}
           />
         );
-      
+
       case 'novo-agendamento':
         return (
-          <NovoAgendamento 
-            onNavigate={setCurrentScreen} 
+          <NovoAgendamento
+            onNavigate={setCurrentScreen}
             dadosAgendamento={dadosAgendamento}
             onAdicionarAgendamento={handleAdicionarAgendamento}
           />
         );
-      
+
       case 'alterar-senha':
         return <AlterarSenha onNavigate={setCurrentScreen} />;
-      
+
       case 'esqueci-senha':
         return <EsqueciSenha onNavigate={setCurrentScreen} />;
 
       // --- ROTAS DO PROFISSIONAL (PACIENTES) ---
       case 'pacientes':
         return (
-          <Pacientes 
+          <Pacientes
             pacientes={pacientes}
             setPacientes={setPacientes}
-            onNavigate={setCurrentScreen} 
+            onNavigate={setCurrentScreen}
             onSelectPatient={(patient) => {
               setSelectedPatient(patient);
               setCurrentScreen('detalhe-paciente');
@@ -205,7 +215,7 @@ export default function App() {
 
       case 'cadastrar-paciente':
         return (
-          <CadastrarPaciente 
+          <CadastrarPaciente
             onNavigate={setCurrentScreen}
             onSavePatient={handleAdicionarPaciente}
           />
@@ -213,7 +223,7 @@ export default function App() {
 
       case 'detalhe-paciente':
         return (
-          <DetalhePaciente 
+          <DetalhePaciente
             patient={selectedPatient}
             onNavigate={setCurrentScreen}
             onUpdatePatient={(pacienteAtualizado) => {
@@ -228,11 +238,11 @@ export default function App() {
 
       default:
         return (
-          <DashboardProfissional 
-            userName={userName} 
-            profilePic={profilePic} 
-            onNavigate={setCurrentScreen} 
-            onLogout={() => setCurrentScreen('login')} 
+          <DashboardProfissional
+            userName={userName}
+            profilePic={profilePic}
+            onNavigate={setCurrentScreen}
+            onLogout={() => setCurrentScreen('login')}
           />
         );
     }

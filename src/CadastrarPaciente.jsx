@@ -29,10 +29,9 @@ export default function CadastrarPaciente({
   const [cpf, setCpf] = useState('');
   const [idade, setIdade] = useState('');
   const [escolaridade, setEscolaridade] = useState('');
-  const [categoria, setCategoria] = useState('meus'); // 'meus' ou 'clinica'
+  const [categoria, setCategoria] = useState('meus');
   const [observacoes, setObservacoes] = useState('');
 
-  // Função para formatar e limitar o CPF (máx 11 dígitos) -> 000.000.000-00
   const handleCpfChange = (e) => {
     let valor = e.target.value.replace(/\D/g, '');
     if (valor.length > 11) valor = valor.slice(0, 11);
@@ -44,7 +43,6 @@ export default function CadastrarPaciente({
     setCpf(valor);
   };
 
-  // Função para formatar e limitar o Telefone (máx 11 dígitos) -> (00) 00000-0000
   const handleTelefoneChange = (e) => {
     let valor = e.target.value.replace(/\D/g, '');
     if (valor.length > 11) valor = valor.slice(0, 11);
@@ -93,10 +91,9 @@ export default function CadastrarPaciente({
   return (
     <div className="min-h-screen bg-[#FAF3EC] text-gray-800 flex flex-col md:flex-row w-full notranslate" translate="no">
 
-      {/* SIDEBAR DESKTOP PADRONIZADA (Forest Green) */}
+      {/* SIDEBAR DESKTOP */}
       <aside className="hidden md:flex md:w-64 bg-[#1b5e3a] text-white flex-col justify-between p-6 fixed inset-y-0 left-0 z-20 shadow-lg overflow-y-auto">
         <div className="space-y-6">
-          {/* Logo */}
           <div 
             onClick={() => onNavigate && onNavigate('dashboard-profissional')}
             className="flex items-center gap-3 px-2 cursor-pointer"
@@ -110,7 +107,6 @@ export default function CadastrarPaciente({
             </div>
           </div>
 
-          {/* Menu Principal */}
           <nav className="space-y-1">
             <button
               type="button"
@@ -125,7 +121,6 @@ export default function CadastrarPaciente({
               type="button"
               onClick={abrirGoogleAgenda}
               className="w-full flex items-center justify-between px-4 py-2.5 text-emerald-100 hover:bg-white/10 hover:text-white rounded-xl text-sm font-medium transition cursor-pointer"
-              title="Abrir Google Agenda em nova aba"
             >
               <span className="flex items-center gap-3">
                 <Calendar className="w-4 h-4" />
@@ -152,7 +147,6 @@ export default function CadastrarPaciente({
               Meus Pacientes
             </button>
 
-            {/* Item Ativo */}
             <button
               type="button"
               onClick={() => onNavigate && onNavigate('cadastrar-paciente')}
@@ -190,48 +184,31 @@ export default function CadastrarPaciente({
       </aside>
 
       {/* ÁREA DE CONTEÚDO PRINCIPAL */}
-      <div className="flex-1 md:ml-64 flex flex-col min-h-screen pb-24 md:pb-10">
+      <div className="flex-1 md:ml-64 flex flex-col min-h-screen pb-12">
         
-        {/* Cabeçalho Superior */}
-        <header className="bg-white border-b border-gray-100 px-6 md:px-10 py-4 sticky top-0 z-10 shadow-sm">
-          <div className="max-w-4xl mx-auto flex justify-between items-center gap-3">
-            <div className="flex items-center gap-3">
-              <button 
-                type="button"
-                onClick={() => onNavigate && onNavigate('pacientes')}
-                className="p-2 rounded-xl bg-gray-50 hover:bg-emerald-50 text-gray-600 hover:text-[#1b5e3a] transition cursor-pointer"
-                title="Voltar para Meus Pacientes"
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </button>
-              <div>
-                <h1 className="text-base md:text-xl font-bold text-gray-800">Cadastrar Paciente</h1>
-                <p className="text-[11px] md:text-xs text-gray-500">Preencha os dados abaixo para liberar o acesso à sua agenda</p>
-              </div>
-            </div>
+        {/* CABEÇALHO PADRÃO (Com Voltar e Título Centralizado) */}
+        <header className="bg-white border-b border-gray-100 px-4 py-3.5 sticky top-0 z-10 shadow-sm flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => onNavigate && onNavigate('pacientes')}
+            className="flex items-center gap-1 text-xs font-bold text-[#1b5e3a] hover:opacity-80 transition cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Voltar</span>
+          </button>
 
-            <button 
-              type="button"
-              onClick={() => onNavigate && onNavigate('minha-conta')}
-              className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-emerald-50 border border-[#1b5e3a]/30 text-[#1b5e3a] font-bold text-sm flex items-center justify-center hover:bg-emerald-100 transition cursor-pointer shrink-0 overflow-hidden"
-              title="Minha Conta"
-            >
-              {profilePic ? (
-                <img src={profilePic} alt={userName} className="w-full h-full object-cover" />
-              ) : (
-                userName.charAt(0)
-              )}
-            </button>
-          </div>
+          <h1 className="text-xs font-bold text-gray-500 uppercase tracking-widest text-center">
+            Cadastrar Paciente
+          </h1>
+
+          <div className="w-12"></div>
         </header>
 
         {/* Conteúdo do Formulário */}
         <main className="flex-1 w-full max-w-4xl mx-auto px-5 md:px-10 py-6 md:py-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             
-            {/* Card de Dados do Formulário */}
             <div className="bg-white p-5 md:p-8 rounded-2xl border border-gray-100 shadow-sm space-y-5">
-              
               <div>
                 <label className="block text-xs md:text-sm font-bold text-gray-700 mb-1.5">
                   Nome Completo do Paciente *
@@ -247,7 +224,6 @@ export default function CadastrarPaciente({
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* CAMPO DE NOME DE UTILIZADOR */}
                 <div>
                   <label className="block text-xs md:text-sm font-bold text-gray-700 mb-1.5">
                     Nome de Utilizador *
@@ -265,7 +241,6 @@ export default function CadastrarPaciente({
                   </div>
                 </div>
 
-                {/* CAMPO DE E-MAIL DE ACESSO */}
                 <div>
                   <label className="block text-xs md:text-sm font-bold text-gray-700 mb-1.5">
                     E-mail de Acesso ao App *
@@ -289,7 +264,6 @@ export default function CadastrarPaciente({
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* CAMPO DE TELEFONE COM MÁSCARA AUTOMÁTICA */}
                 <div>
                   <label className="block text-xs md:text-sm font-bold text-gray-700 mb-1.5">
                     Telefone / WhatsApp *
@@ -309,7 +283,6 @@ export default function CadastrarPaciente({
                   </div>
                 </div>
 
-                {/* CAMPO DE CPF COM MÁSCARA E FORMATAÇÃO AUTOMÁTICA */}
                 <div>
                   <label className="block text-xs md:text-sm font-bold text-gray-700 mb-1.5">
                     CPF *
@@ -387,10 +360,8 @@ export default function CadastrarPaciente({
                   className="w-full bg-gray-50/50 px-3.5 py-3 rounded-xl border border-gray-200 text-xs md:text-sm focus:outline-none focus:border-[#1b5e3a] transition resize-none"
                 />
               </div>
-
             </div>
 
-            {/* Botões de Ação */}
             <div className="flex flex-col sm:flex-row gap-3 justify-end">
               <button
                 type="button"
@@ -410,54 +381,6 @@ export default function CadastrarPaciente({
 
           </form>
         </main>
-
-        {/* Navegação Inferior Mobile */}
-        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-2.5 px-4 flex justify-around items-center z-20 shadow-lg md:hidden">
-          <button 
-            type="button"
-            onClick={() => onNavigate('dashboard-profissional')}
-            className="flex flex-col items-center gap-1 text-gray-400 hover:text-[#1b5e3a] transition text-[10px] font-medium"
-          >
-            <LayoutDashboard className="w-5 h-5" />
-            <span>Início</span>
-          </button>
-          
-          <button 
-            type="button"
-            onClick={abrirGoogleAgenda}
-            className="flex flex-col items-center gap-1 text-gray-400 hover:text-[#1b5e3a] transition text-[10px] font-medium"
-          >
-            <Calendar className="w-5 h-5" />
-            <span>Agenda</span>
-          </button>
-
-          <button 
-            type="button"
-            onClick={() => onNavigate('marcar-consulta-profissional')}
-            className="flex flex-col items-center gap-1 text-gray-400 hover:text-[#1b5e3a] transition text-[10px] font-medium"
-          >
-            <CalendarPlus className="w-5 h-5" />
-            <span>Marcar</span>
-          </button>
-
-          <button 
-            type="button"
-            onClick={() => onNavigate('pacientes')}
-            className="flex flex-col items-center gap-1 text-[#1b5e3a] font-bold text-[10px]"
-          >
-            <Users className="w-5 h-5" />
-            <span>Pacientes</span>
-          </button>
-
-          <button 
-            type="button"
-            onClick={() => onNavigate('minha-conta')}
-            className="flex flex-col items-center gap-1 text-gray-400 hover:text-[#1b5e3a] transition text-[10px] font-medium"
-          >
-            <UserCheck className="w-5 h-5" />
-            <span>Conta</span>
-          </button>
-        </nav>
       </div>
     </div>
   );
