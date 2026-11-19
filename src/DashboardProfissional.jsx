@@ -210,7 +210,7 @@ export default function DashboardProfissional({ userName = 'Dra. Maria Souza', p
 
               <button
                 type="button"
-                onClick={() => onNavigate && onNavigate('configuracoes')}
+                onClick={() => onNavigate && onNavigate('configuracoes-profissional')}
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-emerald-100 hover:bg-white/10 hover:text-white rounded-xl text-sm font-medium transition cursor-pointer"
               >
                 <Settings className="w-4 h-4" />
