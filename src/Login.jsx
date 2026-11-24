@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import folhaIcon from './folha.png'; 
 import folhaLoginImg from './FolhaLogin.jpg'; 
 
 export default function Login({ onSwitchToRegister, onNavigate }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState('paciente'); // 'paciente' ou 'profissional'
 
   const handleSubmit = (e) => {
@@ -65,7 +67,7 @@ export default function Login({ onSwitchToRegister, onNavigate }) {
             <button
               type="button"
               onClick={() => setTipoUsuario('paciente')}
-              className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition ${
+              className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                 tipoUsuario === 'paciente'
                   ? 'bg-[#1b5e3a] text-white shadow-sm'
                   : 'text-gray-500 hover:text-gray-900'
@@ -76,7 +78,7 @@ export default function Login({ onSwitchToRegister, onNavigate }) {
             <button
               type="button"
               onClick={() => setTipoUsuario('profissional')}
-              className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition ${
+              className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                 tipoUsuario === 'profissional'
                   ? 'bg-[#1b5e3a] text-white shadow-sm'
                   : 'text-gray-500 hover:text-gray-900'
@@ -102,14 +104,24 @@ export default function Login({ onSwitchToRegister, onNavigate }) {
    
             <div>
               <label className="block text-xs font-semibold text-gray-600 uppercase mb-1">Senha:</label>
-              <input 
-                type="password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Digite sua senha" 
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1b5e3a] text-sm bg-gray-50/50"
-                required
-              />
+              <div className="relative">
+                <input 
+                  type={showPassword ? 'text' : 'password'} 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Digite sua senha" 
+                  className="w-full pl-4 pr-11 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1b5e3a] text-sm bg-gray-50/50"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#1b5e3a] transition cursor-pointer p-1"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
               <div className="flex justify-end mt-1.5">
                 <button 
                   type="button" 

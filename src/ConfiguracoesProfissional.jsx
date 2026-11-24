@@ -21,14 +21,13 @@ export default function ConfiguracoesProfissional({
   userName = 'Dra. Maria Souza',
   agendaEmailInicial = 'maria.souza@consultorio.com.br',
   tiposAtendimentoInicial = [
-    { id: 1, nome: 'Intervenção Psicopedagógica', duracao: '50 min' },
-    { id: 2, nome: 'Avaliação Diagnóstica', duracao: '60 min' },
-    { id: 3, nome: 'Anamnese com Responsáveis', duracao: '60 min' },
-    { id: 4, nome: 'Devolutiva (Pais / Escola)', duracao: '45 min' },
-    { id: 5, nome: 'Reavaliação', duracao: '50 min' }
+    { id: 1, nome: 'Intervenção Psicopedagógica', duracao: '50 min', modalidade: 'Presencial' },
+    { id: 2, nome: 'Avaliação Diagnóstica', duracao: '60 min', modalidade: 'Presencial' },
+    { id: 3, nome: 'Anamnese com Responsáveis', duracao: '60 min', modalidade: 'Presencial' },
+    { id: 4, nome: 'Devolutiva (Pais / Escola)', duracao: '45 min', modalidade: 'Presencial' },
+    { id: 5, nome: 'Reavaliação', duracao: '50 min', modalidade: 'Presencial' }
   ],
   modalidadePadraoInicial = 'Presencial',
-  linkMeetInicial = '',
   onNavigate,
   onSalvarConfiguracoes
 }) {
@@ -38,7 +37,6 @@ export default function ConfiguracoesProfissional({
   const [novaDuracao, setNovaDuracao] = useState('50 min');
 
   const [modalidadePadrao, setModalidadePadrao] = useState(modalidadePadraoInicial);
-  const [linkMeet, setLinkMeet] = useState(linkMeetInicial);
   const [salvoComSucesso, setSalvoComSucesso] = useState(false);
 
   const abrirGoogleAgenda = () => {
@@ -55,7 +53,8 @@ export default function ConfiguracoesProfissional({
       {
         id: Date.now(),
         nome: nomeLimpo,
-        duracao: novaDuracao
+        duracao: novaDuracao,
+        modalidade: modalidadePadrao
       }
     ]);
 
@@ -74,8 +73,7 @@ export default function ConfiguracoesProfissional({
       onSalvarConfiguracoes({
         emailAgenda,
         tiposAtendimento,
-        modalidadePadrao,
-        linkMeet
+        modalidadePadrao
       });
     }
 
@@ -236,9 +234,10 @@ export default function ConfiguracoesProfissional({
               </div>
             </section>
 
-            {/* 2. ADICIONAR TIPO DE ATENDIMENTO */}
-            <section className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-              <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+            {/* 2. ADICIONAR TIPO DE ATENDIMENTO E MODALIDADE PADRÃO */}
+            <section className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 space-y-5">
+              <div className="flex items-center gap-2 border-b border-gray-100 pb-3">
+                <Video className="w-4 h-4 text-[#1b5e3a]" />
                 <h3 className="text-xs font-bold text-[#1b5e3a] uppercase tracking-wider">
                   2. Adicionar Tipo de Atendimento
                 </h3>
@@ -272,6 +271,29 @@ export default function ConfiguracoesProfissional({
                   <span>Add</span>
                 </button>
               </div>
+
+              <div className="pt-3 border-t border-gray-100">
+                <label className="block text-xs font-semibold text-gray-700 mb-2">
+                  Modalidade padrão:
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {['Presencial', 'Online (Meet)'].map((mod) => (
+                    <button
+                      key={mod}
+                      type="button"
+                      onClick={() => setModalidadePadrao(mod)}
+                      className={`py-2.5 px-4 rounded-xl text-xs font-bold border flex items-center justify-center gap-2 transition cursor-pointer ${
+                        modalidadePadrao === mod
+                          ? 'bg-[#1b5e3a] text-white border-[#1b5e3a]'
+                          : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-emerald-300'
+                      }`}
+                    >
+                      {mod.includes('Online') && <Video className="w-3.5 h-3.5" />}
+                      <span>{mod}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </section>
 
             {/* 3. ATENDIMENTOS CADASTRADOS */}
@@ -303,7 +325,9 @@ export default function ConfiguracoesProfissional({
                     >
                       <div>
                         <p className="text-sm font-bold text-gray-800">{tipo.nome}</p>
-                        <span className="text-[11px] text-gray-500">Duração: {tipo.duracao}</span>
+                        <span className="text-[11px] text-gray-500">
+                          Duração: {tipo.duracao} • {tipo.modalidade || modalidadePadrao}
+                        </span>
                       </div>
                       <button
                         type="button"
@@ -316,55 +340,6 @@ export default function ConfiguracoesProfissional({
                     </div>
                   ))
                 )}
-              </div>
-            </section>
-
-            {/* 4. MODALIDADE PADRÃO E LINK DO MEET */}
-            <section className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-              <div className="flex items-center gap-2 border-b border-gray-100 pb-3">
-                <Video className="w-4 h-4 text-[#1b5e3a]" />
-                <h3 className="text-xs font-bold text-[#1b5e3a] uppercase tracking-wider">
-                  4. Modalidade Padrão e Link do Meet
-                </h3>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-2">
-                    Modalidade padrão:
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {['Presencial', 'Online (Meet)'].map((mod) => (
-                      <button
-                        key={mod}
-                        type="button"
-                        onClick={() => setModalidadePadrao(mod)}
-                        className={`py-2.5 px-4 rounded-xl text-xs font-bold border flex items-center justify-center gap-2 transition cursor-pointer ${
-                          modalidadePadrao === mod
-                            ? 'bg-[#1b5e3a] text-white border-[#1b5e3a]'
-                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-emerald-300'
-                        }`}
-                      >
-                        {mod.includes('Online') && <Video className="w-3.5 h-3.5" />}
-                        <span>{mod}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="linkMeet" className="block text-xs font-semibold text-gray-700 mb-1.5">
-                    Link do Google Meet:
-                  </label>
-                  <input
-                    id="linkMeet"
-                    type="url"
-                    value={linkMeet}
-                    onChange={(e) => setLinkMeet(e.target.value)}
-                    placeholder="https://meet.google.com/xxx-xxxx-xxx"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1b5e3a] bg-gray-50/40"
-                  />
-                </div>
               </div>
             </section>
 

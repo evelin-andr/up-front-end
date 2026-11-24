@@ -22,20 +22,25 @@ export default function Pacientes({
   userName = 'Dra. Maria Souza', 
   profilePic = null 
 }) {
-  const [abaAtiva, setAbaAtiva] = useState('meus');
+  const [abaAtiva, setAbaAtiva] = useState('ativos');
   const [busca, setBusca] = useState('');
 
   const abrirGoogleAgenda = () => {
     window.open('https://calendar.google.com', '_blank', 'noopener,noreferrer');
   };
 
-  const pacientesFiltrados = pacientes.filter((p) => {
-    const matchAba = abaAtiva === 'meus' ? p.categoria === 'meus' : true;
-    const matchBusca = 
-      p.nome.toLowerCase().includes(busca.toLowerCase()) ||
-      (p.escolaridade && p.escolaridade.toLowerCase().includes(busca.toLowerCase()));
+  const pacientesAtivos = pacientes.filter((p) => (p.status || 'ativo') === 'ativo');
+  const pacientesInativos = pacientes.filter((p) => (p.status || 'ativo') === 'inativo');
 
-    return matchAba && matchBusca;
+  const baseLista = abaAtiva === 'ativos' ? pacientesAtivos : pacientesInativos;
+
+  const pacientesFiltrados = baseLista.filter((p) => {
+    const termo = busca.trim().toLowerCase();
+    if (!termo) return true;
+    return (
+      (p.nome && p.nome.toLowerCase().includes(termo)) ||
+      (p.escolaridade && p.escolaridade.toLowerCase().includes(termo))
+    );
   });
 
   return (
@@ -118,7 +123,7 @@ export default function Pacientes({
 
               <button
                 type="button"
-                onClick={() => onNavigate && onNavigate('configuracoes')}
+                onClick={() => onNavigate && onNavigate('configuracoes-profissional')}
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-emerald-100 hover:bg-white/10 hover:text-white rounded-xl text-sm font-medium transition cursor-pointer"
               >
                 <Settings className="w-4 h-4" />
@@ -157,33 +162,33 @@ export default function Pacientes({
         {/* Conteúdo Centralizado */}
         <main className="flex-1 w-full max-w-5xl mx-auto px-5 md:px-10 py-6 md:py-8 space-y-4">
           
-          {/* Abas de Categoria */}
+          {/* Abas de Filtro: Ativos e Inativos */}
           <div className="bg-white p-1.5 rounded-2xl border border-gray-100 shadow-sm grid grid-cols-2 gap-1">
             <button
               type="button"
-              onClick={() => setAbaAtiva('meus')}
+              onClick={() => setAbaAtiva('ativos')}
               className={`py-2.5 text-xs md:text-sm font-bold rounded-xl transition cursor-pointer ${
-                abaAtiva === 'meus' 
+                abaAtiva === 'ativos' 
                   ? 'bg-[#1b5e3a] text-white shadow-sm' 
                   : 'text-gray-500 hover:bg-gray-50'
               }`}
             >
-              Meus ({pacientes.filter(p => p.categoria === 'meus').length})
+              Ativos ({pacientesAtivos.length})
             </button>
             <button
               type="button"
-              onClick={() => setAbaAtiva('clinica')}
+              onClick={() => setAbaAtiva('inativos')}
               className={`py-2.5 text-xs md:text-sm font-bold rounded-xl transition cursor-pointer ${
-                abaAtiva === 'clinica' 
+                abaAtiva === 'inativos' 
                   ? 'bg-[#1b5e3a] text-white shadow-sm' 
                   : 'text-gray-500 hover:bg-gray-50'
               }`}
             >
-              Todos da Clínica ({pacientes.length})
+              Inativos ({pacientesInativos.length})
             </button>
           </div>
 
-          {/* BOTÃO CADASTRAR PACIENTE (Inserido exatamente entre as abas e a busca) */}
+          {/* BOTÃO CADASTRAR PACIENTE */}
           <button
             type="button"
             onClick={() => onNavigate && onNavigate('cadastrar-paciente')}
@@ -209,8 +214,14 @@ export default function Pacientes({
           <div className="space-y-3">
             {pacientesFiltrados.length === 0 ? (
               <div className="bg-white p-10 rounded-2xl border border-gray-100 text-center space-y-1 shadow-sm">
-                <p className="text-sm font-semibold text-gray-600">Nenhum paciente encontrado</p>
-                <p className="text-xs text-gray-400">Tente buscar por outro nome ou termo.</p>
+                <p className="text-sm font-semibold text-gray-600">
+                  {abaAtiva === 'ativos'
+                    ? 'Nenhum paciente ativo encontrado'
+                    : 'Nenhum paciente inativo encontrado'}
+                </p>
+                <p className="text-xs text-gray-400">
+                  Tente buscar por outro nome ou escolaridade.
+                </p>
               </div>
             ) : (
               pacientesFiltrados.map((paciente) => (
